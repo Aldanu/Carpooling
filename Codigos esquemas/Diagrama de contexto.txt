@@ -10,11 +10,12 @@ System(SEGIP, "SEGIP")
 System(Transito, "Transito")
 
 Rel(Driver, app, "Sends Route & Schedule")
-Rel(Passenger, app, "Ask for drivers")
+Rel(app,Driver,"Passenger's Information and Travel Information")
+Rel(Passenger, app, "Ask for drivers and routes")
 Rel(app, Passenger, "receive info from drivers")
-Rel(app, SEGIP, "Ask info from")
-Rel(app, Transito, "Ask info from")
-Rel(SEGIP, app, "send info to")
-Rel(Transito, app, "send info to")
+Rel(app, SEGIP, "Driver's License Auth")
+Rel(SEGIP, app, "Info Driver's License")
+Rel(app, Transito, "Query of Criminal Record")
+Rel(Transito, app, "Boolean Criminal Record")
 
 @enduml

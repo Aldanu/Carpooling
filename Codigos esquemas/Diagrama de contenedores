@@ -12,12 +12,14 @@ System_Boundary(c1, "Carpooling System") {
 System(SEGIP, "SEGIP")
 System(Transito, "Transito")
 
-Rel(Driver, backend, "Sends Route")
-Rel(Passenger, backend, "Ask for drivers")
+Rel(Driver, backend, "Sends Route & Schedule")
+Rel(backend,Driver,"Passenger's Information and Travel Information")
+Rel(Passenger, backend, "Ask for drivers and routes")
 Rel(backend, Passenger, "receive info from drivers")
-Rel(backend, SEGIP, "Gets info from")
-Rel(backend, Transito, "Gets info from")
-Rel(SEGIP, backend, "send info to")
+Rel(backend, SEGIP, "Driver's License Auth")
+Rel(SEGIP, backend, "Info Driver's License")
+Rel(backend, Transito, "Query of Criminal Record")
+Rel(Transito, backend, "Boolean Criminal Record")
 
 
 Rel(cache,backend ,"frecuent data")

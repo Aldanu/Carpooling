@@ -1,0 +1,47 @@
+@startuml Basic Sample
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(Driver, "Carpooler")
+Person(Passenger, "Passenger", "Temporal")
+System_Boundary(c1, "Carpooling System") {
+    Container(BLPassenger,"BL Passenger","-","Business Logic Passenger")
+    Container(BLCarpooler,"BL Carpoler","-","Business Logic Carpooler")
+    Container(BLRoutes,"BL Routes","-","Business Logic Routes")
+    Container(DAOPassenger, "DAO Passenger", "-", "Data Access Object Passenger")
+    Container(DAOCarpooler, "DAO Carpooler", "-", "Data Access Object Carpooler")
+    Container(DAORoutes, "DAO Routes", "-", "Data Access Object Routes")
+    Container(DAOZones, "DAO Zones", "-", "Data Access Object Zones")
+    Container(APIChatbot,"API Chatbot","","Chatbot Interface")
+    Container(database, "FireBase", "JSON", "Allows app to storga data of passengers and carpoolers")
+    Container(cache, "Cache","Servidor cache", "It allows to store subset of transient data")
+
+}
+System(SEGIP, "SEGIP")
+System(Transito, "Transito")
+
+Rel(Driver, APIChatbot, "Sends Route & Schedule")
+Rel(Driver, APIChatbot, "Sends Carpooler Info")
+Rel(APIChatbot,Driver,"Passenger's Information")
+Rel(APIChatbot,Driver,"Travel Information")
+Rel(Passenger,APIChatbot , "Ask for drivers and routes")
+Rel(APIChatbot, Passenger, "receive info from drivers")
+Rel(BLCarpooler, SEGIP, "Driver's License Auth")
+Rel(SEGIP, BLCarpooler, "Info Driver's License")
+Rel(BLCarpooler, Transito, "Query of Criminal Record")
+Rel(Transito,BLCarpooler, "Boolean Criminal Record")
+
+
+Rel(cache,DAOZones ,"frecuent data")
+Rel(DAOPassenger,database,"User data")
+Rel(database,DAOPassenger,"User data")
+Rel(DAOCarpooler,database,"Carpooler data")
+Rel(database,DAOCarpooler,"Carpooler data")
+Rel(database,DAORoutes,"Routes data")
+Rel(DAORoutes,database,"Routes data")
+Rel(DAOPassenger,BLPassenger,"Passenger data")
+Rel(DAOCarpooler,BLCarpooler,"Carpooler data")
+Rel(DAORoutes,BLRoutes,"Carpooler data")
+Rel(BLPassenger,APIChatbot,"Passenger data")
+Rel(BLCarpooler,APIChatbot,"Carpoolers data")
+Rel(BLRoutes,APIChatbot,"Routes data")
+@enduml
