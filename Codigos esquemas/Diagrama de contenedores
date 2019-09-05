@@ -1,0 +1,27 @@
+@startuml Basic Sample
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(Driver, "Carpooler")
+Person(Passenger, "Passenger", "Temporal")
+System_Boundary(c1, "Carpooling System") {
+    Container(backend, "Backend", "Spring Boot", "App Funcionality")
+    Container(database, "FireBase", "JSON", "Allows app to storga data of passengers and carpoolers")
+    Container(cache, "Cache","Servidor cache", "It allows to store subset of transient data")
+
+}
+System(SEGIP, "SEGIP")
+System(Transito, "Transito")
+
+Rel(Driver, backend, "Sends Route")
+Rel(Passenger, backend, "Ask for drivers")
+Rel(backend, Passenger, "receive info from drivers")
+Rel(backend, SEGIP, "Gets info from")
+Rel(backend, Transito, "Gets info from")
+Rel(SEGIP, backend, "send info to")
+
+
+Rel(cache,backend ,"frecuent data")
+Rel(backend,database,"User data")
+Rel(database,backend,"User data +   Routers data")
+
+@enduml
