@@ -2,18 +2,18 @@
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
 
 Person(Driver, "Carpooler")
-Person(Passenger, "Passenger", "Temporal passenger")
+Person(Passenger, "Passenger", "Temporal")
 System_Boundary(c1, "Carpooling System") {
-    Container(app, "ChatBot", "JavaSpring, Telegram", "Allows users to verify available drivers")
+    Container(app, "Mobile App", "JavaSpring, Telegram", "Allows users to verify available")
 }
 System(SEGIP, "SEGIP")
 System(Transito, "Transito")
 
-Rel(Driver, app, "Sends Route & Schedule")
+Rel(Driver, app, "Sends Route")
 Rel(Passenger, app, "Ask for drivers")
 Rel(app, Passenger, "receive info from drivers")
-Rel(app, SEGIP, "Ask info from")
-Rel(app, Transito, "Ask info from")
+Rel(app, SEGIP, "Gets info from")
+Rel(app, Transito, "Gets info from")
 Rel(SEGIP, app, "send info to")
-Rel(Transito, app, "send info to")
+
 @enduml
